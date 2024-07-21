@@ -1,17 +1,28 @@
 package jonathan.orellana.fernanda.hernandez.myapplication.ui.pacientes
 
+import ViewHolderHelpers.Adaptador
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Adapter
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import jonathan.orellana.fernanda.hernandez.myapplication.databinding.FragmentDashboardBinding
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import jonathan.orellana.fernanda.hernandez.myapplication.R
+import jonathan.orellana.fernanda.hernandez.myapplication.databinding.FragmentPacientesBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import modelo.ClaseConexion
+import modelo.dataClassPacientes
 
 class fragment_pacientes : Fragment() {
 
-    private var _binding: FragmentDashboardBinding? = null
+    private var _binding: FragmentPacientesBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -22,16 +33,50 @@ class fragment_pacientes : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val dashboardViewModel =
-            ViewModelProvider(this).get(pacientesViewModel::class.java)
 
-        _binding = FragmentDashboardBinding.inflate(inflater, container, false)
-        val root: View = binding.root
+        val root = inflater.inflate(R.layout.fragment_pacientes, container, false)
+        val rcvPacientes = root.findViewById<RecyclerView>(R.id.rcvPacientes)
 
-        val textView: TextView = binding.textDashboard
-        dashboardViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
+        rcvPacientes.layoutManager = LinearLayoutManager(context)
+        fun obtenerDatos(): List<dataClassPacientes>{
+
+            //crear objeto conexion
+
+            val objConexion = ClaseConexion().cadenaConexion()
+
+            //crear statement
+
+            val statement = objConexion?.createStatement()
+            val resulSet = statement?.executeQuery("select * from tbpacientesrem")!!
+            val pacientes = mutableListOf<dataClassPacientes>()
+
+            while(resulSet.next()){
+                val txtUUID = resulSet.getString("uuid_paciente")
+                val txtNombres = resulSet.getString("nombre_rem")
+                val txtApellidos = resulSet.getString("apellido_rem")
+                val txtEdad = resulSet.getString("edad_rem").toInt()
+                val txtEnfermedades = resulSet.getString("enfermedad_rem")
+                val txtHabitacion = resulSet.getString("numerode_habitacion").toInt()
+                val txtCama = resulSet.getString("numerode_cama").toInt()
+                val txtMedicamentos = resulSet.getString("medicamentosasignas")
+                val txtIngreso = resulSet.getString("fechadeingreso")
+                val txtAplicacion = resulSet.getString("horadeaplicacion")
+
+
+
+                val ValoresJuntos = dataClassPacientes(txtUUID, txtNombres, txtApellidos, txtEdad, txtEnfermedades, txtHabitacion, txtCama, txtMedicamentos, txtIngreso, txtAplicacion)
+                pacientes.add(ValoresJuntos)
+            }
+            return pacientes
         }
+        CoroutineScope(Dispatchers.IO).launch {
+            val PacienteDB = obtenerDatos()
+            withContext(Dispatchers.Main){
+                val adapter = Adaptador(PacienteDB)
+                rcvPacientes.adapter= adapter
+            }
+        }
+
         return root
     }
 

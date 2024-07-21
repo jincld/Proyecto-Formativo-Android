@@ -1,12 +1,17 @@
 package jonathan.orellana.fernanda.hernandez.myapplication
 
 import android.os.Bundle
+import android.widget.Button
+import android.widget.ImageButton
+import android.widget.TextView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import jonathan.orellana.fernanda.hernandez.myapplication.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {

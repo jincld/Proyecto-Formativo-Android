@@ -15,11 +15,11 @@
         android:id="@+id/fragment_pacientes"
         android:name="jonathan.orellana.fernanda.hernandez.myapplication.ui.pacientes.fragment_pacientes"
         android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/fragment_pacientes" />
 
     <fragment
         android:id="@+id/fragmnet_agregar_pacientes"
         android:name="jonathan.orellana.fernanda.hernandez.myapplication.ui.agregar_paciente.fragment_agregar_paciente"
         android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        tools:layout="@layout/fragment_agregar_paciente" />
 </navigation>
