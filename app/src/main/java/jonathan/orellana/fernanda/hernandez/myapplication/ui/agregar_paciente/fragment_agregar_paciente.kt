@@ -38,7 +38,7 @@ class fragment_agregar_paciente : Fragment() {
         _binding = FragmentAgregarPacienteBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        var txtNombres = root.findViewById<EditText>(R.id.txtNombres)
+        var txtNombres = root.findViewById<EditText>(R.id.nombre)
         var txtApellidos = root.findViewById<EditText>(R.id.txtApellidos)
         var txtEdad = root.findViewById<EditText>(R.id.txtEdad)
         var txtCama = root.findViewById<EditText>(R.id.txtCama)

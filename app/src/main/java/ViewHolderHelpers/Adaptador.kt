@@ -21,15 +21,15 @@ class Adaptador(var Datos: List<dataClassPacientes>): RecyclerView.Adapter<ViewH
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val paciente = Datos[position]
-        holder.txtNombres.text = paciente.txtNombres
-        holder.txtApellidos.text = paciente.txtApellidos
+        holder.txtNombresCard.text = paciente.txtNombres
+/*        holder.txtApellidos.text = paciente.txtApellidos
         holder.txtEdad.text = paciente.txtEdad.toString()
         holder.txtEnfermedades.text = paciente.txtEnfermedades
         holder.txtHabitacion.text = paciente.txtHabitacion.toString()
         holder.txtCama.text = paciente.txtCama.toString()
         holder.txtMedicamentos.text = paciente.txtMedicamentos
         holder.txtIngreso.text = paciente.txtIngreso
-        holder.txtAplicacion.text = paciente.txtAplicacion
+        holder.txtAplicacion.text = paciente.txtAplicacion*/
 
         //todo: click icono eliminar
         holder.btnEliminarCard.setOnClickListener() {
