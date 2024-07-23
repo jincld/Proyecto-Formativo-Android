@@ -10,7 +10,8 @@ import jonathan.orellana.fernanda.hernandez.myapplication.R
 
 class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
     var txtNombresCard = view.findViewById<TextView>(R.id.txtNombreCard)
-   var txtApellidos = view.findViewById<TextView>(R.id.txtapellidoCard)
+    var txtApellidos = view.findViewById<TextView>(R.id.txtapellidoCard)
+    var txtMedicamentos = view.findViewById<TextView>(R.id.txtMedicamentosCard)
     /* var txtEdad = view.findViewById<TextView>(R.id.txtEdad)
     var txtCama = view.findViewById<TextView>(R.id.txtCama)
     var txtHabitacion = view.findViewById<TextView>(R.id.txtHabitacion)

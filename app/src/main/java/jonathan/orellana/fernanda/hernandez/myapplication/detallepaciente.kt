@@ -66,6 +66,10 @@ class detallepaciente : AppCompatActivity() {
         txtaplicacion.text = aplicacion
 
 
+
+
+
+
         }
 
     }

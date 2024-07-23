@@ -48,20 +48,20 @@ class Adaptador(var Datos: List<dataClassPacientes>): RecyclerView.Adapter<ViewH
         holder.btnEditarCard.setOnClickListener {
             val context = holder.itemView.context
             val builder = AlertDialog.Builder(context)
-            builder.setTitle("Editar")
-            builder.setMessage("¿Desea editar el paciente?")
+            builder.setTitle("Editar Medicamentos")
+            builder.setMessage("¿Desea editar los medicamentos?")
 
             //cuadro de texto para editar
             val cuadrotexto = EditText(context)
-            cuadrotexto.setHint(paciente.txtNombres)
+            cuadrotexto.setHint(paciente.txtMedicamentos)
             builder.setView(cuadrotexto)
 
             //botones
-            builder.setPositiveButton("si") { dialog, which ->
+            builder.setPositiveButton("Confirmar") { dialog, which ->
                 actualizardatos(cuadrotexto.text.toString(), paciente.txtApellidos)
             }
 
-            builder.setNegativeButton("No") { dialog, which ->
+            builder.setNegativeButton("Cancelar") { dialog, which ->
                 dialog.dismiss()
             }
             val dialog = builder.create()
@@ -69,8 +69,8 @@ class Adaptador(var Datos: List<dataClassPacientes>): RecyclerView.Adapter<ViewH
         }
 
         holder.txtNombresCard.text = paciente.txtNombres
-
-    holder.txtApellidos.text = paciente.txtApellidos
+        holder.txtApellidos.text = paciente.txtApellidos
+        holder.txtMedicamentos.text = paciente.txtMedicamentos
 
     /*        holder.txtEdad.text = paciente.txtEdad.toString()
         holder.txtEnfermedades.text = paciente.txtEnfermedades
@@ -109,21 +109,21 @@ class Adaptador(var Datos: List<dataClassPacientes>): RecyclerView.Adapter<ViewH
 
 
     }
-    fun actualizarpantalla (nombrenuevo:String, nuevoapellido: String){
+    fun actualizarpantalla (medicamentosNuevos:String, nuevoapellido: String){
         val index =Datos.indexOfFirst{it.txtApellidos == nuevoapellido}
-        Datos[index].txtNombres = nombrenuevo
+        Datos[index].txtMedicamentos = medicamentosNuevos
         notifyItemChanged(index)
     }
 
 
 
-    fun actualizardatos(nombrenuevo: String, nuevoapellido: String){
+    fun actualizardatos(medicamentosNuevos: String, nuevoapellido: String){
         GlobalScope.launch(Dispatchers.IO) {
             val objConexion = ClaseConexion().cadenaConexion()
 
             //VAIRABLE QUE TENGA UN PREPARESTATEMENT
-            val updatepacientes = objConexion?.prepareStatement("update tbpacientesrem set nombre_rem = ? where apellido_rem = ?")!!
-            updatepacientes.setString(1, nombrenuevo)
+            val updatepacientes = objConexion?.prepareStatement("update tbpacientesrem set medicamentosasignas = ? where apellido_rem = ?")!!
+            updatepacientes.setString(1, medicamentosNuevos)
             updatepacientes.setString(2, nuevoapellido)
             updatepacientes.executeUpdate()
 
@@ -131,7 +131,7 @@ class Adaptador(var Datos: List<dataClassPacientes>): RecyclerView.Adapter<ViewH
             commit.executeUpdate()
 
             withContext(Dispatchers.Main){
-                actualizarpantalla(nombrenuevo, nuevoapellido)
+                actualizarpantalla(medicamentosNuevos, nuevoapellido)
 
 
             }
