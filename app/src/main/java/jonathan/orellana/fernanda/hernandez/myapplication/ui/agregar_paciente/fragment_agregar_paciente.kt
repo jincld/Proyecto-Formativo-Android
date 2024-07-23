@@ -1,5 +1,6 @@
 package jonathan.orellana.fernanda.hernandez.myapplication.ui.agregar_paciente
 
+import ViewHolderHelpers.Adaptador
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -17,6 +18,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import modelo.ClaseConexion
+import modelo.dataClassPacientes
 import java.util.UUID
 
 class fragment_agregar_paciente : Fragment() {
@@ -50,6 +52,39 @@ class fragment_agregar_paciente : Fragment() {
         var btnAgregar = root.findViewById<Button>(R.id.btnAgregar)
 
 
+
+        /*fun obtenerdatos(): List<dataClassPacientes>{
+
+
+            val objConexion = ClaseConexion().cadenaConexion()
+
+
+            val statement = objConexion?.createStatement()
+            val resulSet = statement?.executeQuery("select * from ticket") !!
+            val paciente = mutableListOf<dataClassPacientes>()
+
+            //recorro todos los registros de la base de datos
+            while (resulSet.next())  {
+
+
+
+                val nombre = resulSet.getString("nombre_rem")
+                val apellido = resulSet.getString("apellido_rem")
+                val edad = resulSet.getString("edad_rem").toString()
+                val enfer = resulSet.getString("enfermedades_rem")
+                val habit = resulSet.getString("numerode_habitacion").toString()
+                val cama = resulSet.getString("numerode_cama").toString()
+                val medic = resulSet.getString("medicamentosasignas")
+                val ingreso = resulSet.getString("fechadeingreso")
+                val aplic= resulSet.getString("horadeaplicacion")
+
+                val pacientes = dataClassPacientes(nombre, apellido, edad, enfer, habit, cama, medic, ingreso, aplic)
+                paciente.add(pacientes)
+            }
+      return paciente*/
+
+
+
         btnAgregar.setOnClickListener {
             CoroutineScope(Dispatchers.IO).launch {
 
@@ -80,7 +115,6 @@ class fragment_agregar_paciente : Fragment() {
                     txtIngreso.setText("")
                     txtAplicacion.setText("")
                 }
-
             }
 
         }

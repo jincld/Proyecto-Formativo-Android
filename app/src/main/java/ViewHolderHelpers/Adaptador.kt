@@ -1,13 +1,17 @@
 package ViewHolderHelpers
 
 import android.app.AlertDialog
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.EditText
 import androidx.recyclerview.widget.RecyclerView
 import jonathan.orellana.fernanda.hernandez.myapplication.R
+import jonathan.orellana.fernanda.hernandez.myapplication.detallepaciente
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import modelo.ClaseConexion
 import modelo.dataClassPacientes
 
@@ -17,13 +21,58 @@ class Adaptador(var Datos: List<dataClassPacientes>): RecyclerView.Adapter<ViewH
         return ViewHolder(vista)
     }
 
+
     override fun getItemCount() = Datos.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val paciente = Datos[position]
+
+
+        holder.itemView.setOnClickListener(){
+            val context = holder.itemView.context
+
+            val pantalladetalle = Intent(context, detallepaciente::class.java)
+
+            pantalladetalle.putExtra("nombre_rem", paciente.txtNombres)
+            pantalladetalle.putExtra("apellido_rem", paciente.txtApellidos)
+            pantalladetalle.putExtra("edad_rem", paciente.txtEdad)
+            pantalladetalle.putExtra("enfermedad_rem", paciente.txtEnfermedades)
+            pantalladetalle.putExtra("numerode_habitacion", paciente.txtHabitacion)
+            pantalladetalle.putExtra("numerode_cama", paciente.txtCama)
+            pantalladetalle.putExtra("medicamentosasignas", paciente.txtMedicamentos)
+            pantalladetalle.putExtra("horadeaplicacion", paciente.txtAplicacion)
+            pantalladetalle.putExtra("fechadeingreso", paciente.txtIngreso)
+            context.startActivity(pantalladetalle)
+        }
+
+        holder.btnEditarCard.setOnClickListener {
+            val context = holder.itemView.context
+            val builder = AlertDialog.Builder(context)
+            builder.setTitle("Editar")
+            builder.setMessage("¿Desea editar el paciente?")
+
+            //cuadro de texto para editar
+            val cuadrotexto = EditText(context)
+            cuadrotexto.setHint(paciente.txtNombres)
+            builder.setView(cuadrotexto)
+
+            //botones
+            builder.setPositiveButton("si") { dialog, which ->
+                actualizardatos(cuadrotexto.text.toString(), paciente.txtApellidos)
+            }
+
+            builder.setNegativeButton("No") { dialog, which ->
+                dialog.dismiss()
+            }
+            val dialog = builder.create()
+            dialog.show()
+        }
+
         holder.txtNombresCard.text = paciente.txtNombres
-/*        holder.txtApellidos.text = paciente.txtApellidos
-        holder.txtEdad.text = paciente.txtEdad.toString()
+
+    holder.txtApellidos.text = paciente.txtApellidos
+
+    /*        holder.txtEdad.text = paciente.txtEdad.toString()
         holder.txtEnfermedades.text = paciente.txtEnfermedades
         holder.txtHabitacion.text = paciente.txtHabitacion.toString()
         holder.txtCama.text = paciente.txtCama.toString()
@@ -54,6 +103,41 @@ class Adaptador(var Datos: List<dataClassPacientes>): RecyclerView.Adapter<ViewH
             dialog.show()
         }
     }
+    fun actualizarlista (nuevoList: List<dataClassPacientes>) {
+        Datos = nuevoList
+        notifyDataSetChanged()  //notifica al recycle view  que hay datos nuevos
+
+
+    }
+    fun actualizarpantalla (nombrenuevo:String, nuevoapellido: String){
+        val index =Datos.indexOfFirst{it.txtApellidos == nuevoapellido}
+        Datos[index].txtNombres = nombrenuevo
+        notifyItemChanged(index)
+    }
+
+
+
+    fun actualizardatos(nombrenuevo: String, nuevoapellido: String){
+        GlobalScope.launch(Dispatchers.IO) {
+            val objConexion = ClaseConexion().cadenaConexion()
+
+            //VAIRABLE QUE TENGA UN PREPARESTATEMENT
+            val updatepacientes = objConexion?.prepareStatement("update tbpacientesrem set nombre_rem = ? where apellido_rem = ?")!!
+            updatepacientes.setString(1, nombrenuevo)
+            updatepacientes.setString(2, nuevoapellido)
+            updatepacientes.executeUpdate()
+
+            val commit = objConexion.prepareStatement("commit")!!
+            commit.executeUpdate()
+
+            withContext(Dispatchers.Main){
+                actualizarpantalla(nombrenuevo, nuevoapellido)
+
+
+            }
+        }
+
+    }
 
     fun eliminarDatos(txtNombres: String, position: Int) {
 
@@ -76,5 +160,8 @@ class Adaptador(var Datos: List<dataClassPacientes>): RecyclerView.Adapter<ViewH
         notifyDataSetChanged()
 
     }
+
+
+
 
 }

@@ -5,10 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Adapter
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import jonathan.orellana.fernanda.hernandez.myapplication.R
@@ -54,10 +51,10 @@ class fragment_pacientes : Fragment() {
                 val txtUUID = resulSet.getString("uuid_paciente")
                 val txtNombres = resulSet.getString("nombre_rem")
                 val txtApellidos = resulSet.getString("apellido_rem")
-                val txtEdad = resulSet.getString("edad_rem").toInt()
+                val txtEdad = resulSet.getString("edad_rem")
                 val txtEnfermedades = resulSet.getString("enfermedad_rem")
-                val txtHabitacion = resulSet.getString("numerode_habitacion").toInt()
-                val txtCama = resulSet.getString("numerode_cama").toInt()
+                val txtHabitacion = resulSet.getString("numerode_habitacion")
+                val txtCama = resulSet.getString("numerode_cama")
                 val txtMedicamentos = resulSet.getString("medicamentosasignas")
                 val txtIngreso = resulSet.getString("fechadeingreso")
                 val txtAplicacion = resulSet.getString("horadeaplicacion")
@@ -66,6 +63,8 @@ class fragment_pacientes : Fragment() {
 
                 val ValoresJuntos = dataClassPacientes(txtUUID, txtNombres, txtApellidos, txtEdad, txtEnfermedades, txtHabitacion, txtCama, txtMedicamentos, txtIngreso, txtAplicacion)
                 pacientes.add(ValoresJuntos)
+
+
             }
             return pacientes
         }
@@ -74,6 +73,7 @@ class fragment_pacientes : Fragment() {
             withContext(Dispatchers.Main){
                 val adapter = Adaptador(PacienteDB)
                 rcvPacientes.adapter= adapter
+
             }
         }
 
