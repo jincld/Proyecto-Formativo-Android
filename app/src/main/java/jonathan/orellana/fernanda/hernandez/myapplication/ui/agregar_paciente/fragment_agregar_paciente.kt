@@ -34,6 +34,8 @@ class fragment_agregar_paciente : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        getActivity()?.actionBar?.hide();
+
         val notificationsViewModel =
             ViewModelProvider(this).get(agregarPacienteViewModel::class.java)
 

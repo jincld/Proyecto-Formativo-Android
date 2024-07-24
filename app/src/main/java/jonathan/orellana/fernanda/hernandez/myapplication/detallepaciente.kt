@@ -1,9 +1,12 @@
 package jonathan.orellana.fernanda.hernandez.myapplication
 
 import android.app.AlertDialog
+import android.content.Intent
 import android.os.Bundle
 import android.text.InputType
 import android.widget.EditText
+import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
@@ -11,6 +14,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import jonathan.orellana.fernanda.hernandez.myapplication.ui.pacientes.fragment_pacientes
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -19,6 +23,9 @@ import modelo.ClaseConexion
 class detallepaciente : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
+        supportActionBar?.hide();
+
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_detallepaciente)
@@ -53,21 +60,15 @@ class detallepaciente : AppCompatActivity() {
         val txtaplicacion = findViewById<TextView>(R.id.aplicaciondetalle)
 
 
-
-
         txtnombre.text = nombre
         txtapellido.text = apellido
         txtedad.text= edad
         txtenfermedad.text = enfermedad
-       txthabitacion.text = habitacion
+        txthabitacion.text = habitacion
         txtcama.text = cama
         txtmedicamentos.text = medicamentos
         txtingreso.text = ingreso
         txtaplicacion.text = aplicacion
-
-
-
-
 
 
         }

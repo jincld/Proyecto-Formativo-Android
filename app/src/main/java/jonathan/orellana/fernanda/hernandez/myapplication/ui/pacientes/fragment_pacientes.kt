@@ -1,6 +1,7 @@
 package jonathan.orellana.fernanda.hernandez.myapplication.ui.pacientes
 
 import ViewHolderHelpers.Adaptador
+import android.app.ActionBar
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -30,6 +31,8 @@ class fragment_pacientes : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
+        getActivity()?.actionBar?.hide();
 
         val root = inflater.inflate(R.layout.fragment_pacientes, container, false)
         val rcvPacientes = root.findViewById<RecyclerView>(R.id.rcvPacientes)

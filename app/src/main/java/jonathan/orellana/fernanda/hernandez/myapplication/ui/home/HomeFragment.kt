@@ -22,6 +22,9 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
+        getActivity()?.actionBar?.hide();
+
         val homeViewModel =
             ViewModelProvider(this).get(HomeViewModel::class.java)
 
